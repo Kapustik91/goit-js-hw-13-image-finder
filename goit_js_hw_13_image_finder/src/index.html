@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Image finder</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    
+  </head>
+
+  <body>
+    <form class="form-inline search-form js-search-form" id="search-form">
+      <div class="form-group">
+        <label for="searchQuery" class="sr-only">What would you like to find?</label>
+        <input type="text" class="form-control" name="query" id="searchQuery" placeholder="I'm looking for..." autocomplete="off">
+      </div>
+      <button type="submit" class="btn btm-primary">Search</button>
+    </form>
+
+    <ul class="gallery js-gallery"></ul>
+
+    <button type="button" class="search-button" data-action="load-more">
+      <span class="searching">Show more</span>
+    </button>
+    <!-- <script src="./index.js"></script> -->
+  </body>
+</html>
