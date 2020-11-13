@@ -30,18 +30,18 @@ function onSearch(e) {
     imagesFinderApiService.query = e.currentTarget.elements.query.value;
 
     if (imagesFinderApiService.query === '') {
-        return alert('Please enter what you are looking for');
+        alert('Please enter what you are looking for');
+        error({
+            text: "Sorry, I can't find it:( Try again!",
+             delay: 3000
+
+        })
     }
     
     loadMoreBtn.show();
     imagesFinderApiService.resetPage();
     imagesFinderApiService.fetchImages()
-        .then(appendArticlesMarkup)
-        .catch(error({
-            text: "Sorry, I can't find it:( Try again!",
-             delay: 3000
-
-        }));;
+        .then(appendArticlesMarkup);
 }
 
 function onLoadMore() {
