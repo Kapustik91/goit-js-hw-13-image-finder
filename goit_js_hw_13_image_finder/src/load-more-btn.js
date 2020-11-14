@@ -7,7 +7,7 @@ export default class LoadMoreBtn {
 
     getRefs(selector) {
         const refs = {};
-        refs.button = document.querySelector('.search-button');
+        refs.button = document.querySelector(selector);
         refs.searching = document.querySelector('.searching');
 
         return refs;

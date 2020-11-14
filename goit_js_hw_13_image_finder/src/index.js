@@ -10,6 +10,7 @@ import LoadMoreBtn from './load-more-btn';
 const refs = {
     searchForm: document.querySelector('.js-search-form'),
     articlesContainer: document.querySelector('.js-gallery'),
+    currentHeight: document.documentElement.clientHeight
     // loadMoreBtn: document.querySelector('[data-action="load-more"]'),
 };
 const loadMoreBtn = new LoadMoreBtn({
@@ -24,41 +25,34 @@ loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
 function onSearch(e) {
     e.preventDefault();
 
-
-
-    clearArticlesContainer();
     imagesFinderApiService.query = e.currentTarget.elements.query.value;
 
-    if (imagesFinderApiService.query === '') {
-        alert('Please enter what you are looking for');
-        error({
-            text: "Sorry, I can't find it:( Try again!",
-             delay: 3000
 
-        })
-    }
-    
-    loadMoreBtn.show();
+    if (imagesFinderApiService.query === '') {
+        clearArticlesContainer();
+        loadMoreBtn.hide();
+        alert({
+            text: 'Please enter what you are looking for',
+            delay: 2000
+        });
+        return
+    };
     imagesFinderApiService.resetPage();
+    clearArticlesContainer();
     imagesFinderApiService.fetchImages()
         .then(appendArticlesMarkup);
+     loadMoreBtn.show();
+
 }
 
 function onLoadMore() {
+    loadMoreBtn.show();
     loadMoreBtn.disable();
     imagesFinderApiService.fetchImages()
         .then(appendArticlesMarkup);
-        
+    window.scrollTo(0, refs.currentHeight + pageYOffset - 800);
     loadMoreBtn.enable();
-    
-    setTimeout(function () {
-        window.scrollTo(0, 1000)
-        window.scrollTo({
-      top: 1000,
-            behavior: 'smooth',
-    })
-        },0);
-
+    onErrorSearch(images);
 }
 
 function appendArticlesMarkup(articles) {
@@ -67,4 +61,16 @@ function appendArticlesMarkup(articles) {
 
 function clearArticlesContainer() {
     refs.articlesContainer.innerHTML = '';
+}
+
+function onErrorSearch(images) {
+    const numberOfImages = images.hits.length;
+    if (numberOfImages === 0) {
+        loadMoreBtn.hide();
+        error({
+            text: 'I can not find it:( Try again!',
+            delay: 2000
+        });
+    
+    }
 }
